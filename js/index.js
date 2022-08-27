@@ -18,10 +18,60 @@ const deckCardsImg = document.querySelector('.deck-of-cards-img');
 
 let map, mapNum, level, levelNum;
 
+let cardCount = [
+  [
+    [0, 2, 2],
+    [1, 3, 0],
+    [3, 4, 0]
+  ],
+  [
+    [1, 2, 1],
+    [3, 2, 1],
+    [2, 4, 0]
+  ],
+  [
+    [0, 2, 1],
+    [2, 3, 1],
+    [3, 4, 0]
+  ],
+  [
+    [1, 2, 1],
+    [2, 3, 1],
+    [2, 4, 0]
+  ]
+]
+
+
+let cardsFileName = [
+  [
+    ['green2', 'green3', 'green4', 'green5', 'green6'],
+    ['green7', 'green8', 'green9', 'green10', 'green11', 'green13', 'green14', 'green15'],
+    ['green1', 'green12', 'green16', 'green17', 'green18']
+  ],
+  [
+    ['brown6', 'brown7', 'brown8', 'brown9', 'brown10'],
+    ['brown1', 'brown2', 'brown3', 'brown4', 'brown5', 'brown15', 'brown16', 'brown17', 'brown18', 'brown19', 'brown20'],
+    ['brown11', 'brown12', 'brown13', 'brown14', 'brown21']
+  ],
+  [
+    ['blue1', 'blue2', 'blue6', 'blue8'],
+    ['blue7', 'blue9', 'blue11', 'blue12'],
+    ['blue3', 'blue4', 'blue5', 'blue10']
+  ]
+]
+
+let cardGame = [
+  [],
+  [],
+  []
+]
+
 start.addEventListener('click', () => {
   deck.classList.remove('active');
   ancients.classList.remove('active');
   start.classList.remove('active');
+  cardBack.classList.remove('active');
+  deckCards.classList.remove('active');
   mapStatus.textContent = 'Выберите карту древнего';
   levelStatus.textContent = '';
   headerContainer.style.justifyContent = 'center';
@@ -51,29 +101,6 @@ ancientsImg.forEach((el, i) => {
   })
 })
 
-let cardCount = [
-  [
-    [0, 2, 2],
-    [1, 3, 0],
-    [3, 4, 0]
-  ],
-  [
-    [1, 2, 1],
-    [3, 2, 1],
-    [2, 4, 0]
-  ],
-  [
-    [0, 2, 1],
-    [2, 3, 1],
-    [3, 4, 0]
-  ],
-  [
-    [1, 2, 1],
-    [2, 3, 1],
-    [2, 4, 0]
-  ]
-]
-
 buttonLevels.forEach((el, i) => {
   el.addEventListener('click', () => {
     level = el.textContent;
@@ -85,48 +112,11 @@ buttonLevels.forEach((el, i) => {
     addCardCount(stage2, 1);
     addCardCount(stage3, 2);
     addCards();
-    console.log('Итоговый ', cardGame);
   })
 })
 
-// var item = items[Math.floor(Math.random()*items.length)];
-
-let cardsFileName = [
-  [
-    ['green2', 'green3', 'green4', 'green5', 'green6'],
-    ['green7', 'green8', 'green9', 'green10', 'green11', 'green13', 'green14', 'green15'],
-    ['green1', 'green12', 'green16', 'green17', 'green18']
-  ],
-  [
-    ['brown6', 'brown7', 'brown8', 'brown9', 'brown10'],
-    ['brown1', 'brown2', 'brown3', 'brown4', 'brown5', 'brown15', 'brown16', 'brown17', 'brown18', 'brown19', 'brown20'],
-    ['brown11', 'brown12', 'brown13', 'brown14', 'brown21']
-  ],
-  [
-    ['blue1', 'blue2', 'blue6', 'blue8'],
-    ['blue7', 'blue9', 'blue11', 'blue12'],
-    ['blue3', 'blue4', 'blue5', 'blue10']
-  ]
-]
-
-let cardGame = [
-  [],
-  [],
-  []
-]
-
-// var item = cardsFileName[1][2][Math.floor(Math.random()*cardsFileName.length)];
-// if (!cardGame[num].includes(item)) {
-//   cardGame[num].push(item);
-// } else {
-//   item = cardsFileName[1][2][Math.floor(Math.random()*cardsFileName.length)];
-// }
-
-
 function addCards() {
   let arr = cardsFileName;
-
-  console.log('исходный ', arr);
 
   if (levelNum === 0) {
     function pushArrCard(stage, k) {
@@ -143,6 +133,7 @@ function addCards() {
         }
       }
     }
+
     function shuffle(array) {
       array.sort(() => Math.random() - 0.5);
     }
@@ -163,9 +154,6 @@ function addCards() {
     shuffle(cardGame[2]);
   }
 
-
-
-
   if (levelNum === 1) {
 
   }
@@ -179,7 +167,6 @@ function addCards() {
   }
 
 }
-
 
 function addCardCount(stageNum, num) {
   let stage = stageNum;
@@ -197,23 +184,90 @@ function addCardCount(stageNum, num) {
   }
 }
 
-function showCard() {
-  let dir
-  if (cardGame[0][0].includes('bl')) {
-    dir = 'blue';
-  } else if (cardGame[0][0].includes('br')) {
-    dir = 'brown';
-  } else if (cardGame[0][0].includes('gr')) {
-    dir = 'green';
+function showCard(i) {
+  let dir;
+  let stageStatus = 0;
+  let fileName = cardGame[i][0];
+
+  if (cardGame[0].length === 0) {
+    i = 1;
+    stageStatus = 1;
+    fileName = cardGame[i][0];
   }
-  deckCardsImg.setAttribute('src', `assets/MythicCards/${dir}/${cardGame[0][0]}.png`);
-  cardGame[0].splice(0, 1);
+
+  if ((cardGame[0].length === 0) && (cardGame[1].length === 0)) {
+    i = 2;
+    stageStatus = 2;
+    fileName = cardGame[i][0];
+  }
+
+  if ((cardGame[0].length === 0) && (cardGame[1].length === 0) && (cardGame[2].length === 1)) {
+    cardBack.classList.add('active');
+  }
+
+  if (fileName.includes('bl')) {
+    dir = 'blue';
+    let nC = 2;
+    if (stageStatus === 0) {
+      cardCount[mapNum][stageStatus][nC] = cardCount[mapNum][stageStatus][nC] - 1;
+    }
+    addCardCount(stage1, 0);
+
+    if (stageStatus === 1) {
+      cardCount[mapNum][stageStatus][nC] = cardCount[mapNum][stageStatus][nC] - 1;
+    }
+    addCardCount(stage2, 1);
+
+    if (stageStatus === 2) {
+      cardCount[mapNum][stageStatus][nC] = cardCount[mapNum][stageStatus][nC] - 1;
+    }
+    addCardCount(stage3, 2);
+
+  } else if (fileName.includes('br')) {
+    dir = 'brown';
+    let nC = 1;
+    if (stageStatus === 0) {
+      cardCount[mapNum][stageStatus][nC] = cardCount[mapNum][stageStatus][nC] - 1;
+    }
+    addCardCount(stage1, 0);
+
+    if (stageStatus === 1) {
+      cardCount[mapNum][stageStatus][nC] = cardCount[mapNum][stageStatus][nC] - 1;
+    }
+    addCardCount(stage2, 1);
+
+    if (stageStatus === 2) {
+      cardCount[mapNum][stageStatus][nC] = cardCount[mapNum][stageStatus][nC] - 1;
+    }
+    addCardCount(stage3, 2);
+
+  } else if (fileName.includes('gr')) {
+    dir = 'green';
+    let nC = 0;
+    if (stageStatus === 0) {
+      cardCount[mapNum][stageStatus][nC] = cardCount[mapNum][stageStatus][nC] - 1;
+    }
+    addCardCount(stage1, 0);
+
+    if (stageStatus === 1) {
+      cardCount[mapNum][stageStatus][nC] = cardCount[mapNum][stageStatus][nC] - 1;
+    }
+    addCardCount(stage2, 1);
+
+    if (stageStatus === 2) {
+      cardCount[mapNum][stageStatus][nC] = cardCount[mapNum][stageStatus][nC] - 1;
+    }
+    addCardCount(stage3, 2);
+  }
+
+  deckCardsImg.setAttribute('src', `assets/MythicCards/${dir}/${fileName}.png`);
+  cardGame[i].splice(0, 1);
   console.log('После удаления ', cardGame);
 
   console.log(deckCardsImg);
 }
 
 cardBack.addEventListener('click', () => {
-  showCard();
+  showCard(0);
   deckCards.classList.add('active');
 })
