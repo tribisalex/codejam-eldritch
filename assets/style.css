@@ -55,7 +55,7 @@ body {
 }
 
 .myths-circle {
-   display: flex;
+  display: flex;
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -92,6 +92,7 @@ body {
 }
 
 .deck-card-back {
+  cursor: pointer;
   display: block;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
 }
@@ -147,7 +148,7 @@ body {
 }
 
 a.button-levels-link {
-  margin:0 auto;
+  margin: 0 auto;
   display: block;
   line-height: 50px;
   height: 50px;
@@ -156,7 +157,7 @@ a.button-levels-link {
   text-align: center;
   text-decoration: none;
   font-weight: bold;
-  text-shadow: 0 100px 0 #FFF,1px 76px 10px #000;
+  text-shadow: 0 100px 0 #FFF, 1px 76px 10px #000;
   color: #FFF;
   background: #C5B358;
   border-right: 2px solid #FFF;
@@ -164,9 +165,10 @@ a.button-levels-link {
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
-   transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 
 }
+
 a.button-levels-link:hover {
   text-shadow: 0 50px 0 #FFF, 1px 51px 20px #FFF;
   margin-top: -50px;

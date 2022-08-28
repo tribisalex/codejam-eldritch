@@ -203,6 +203,7 @@ buttonLevels.forEach((el, i) => {
 
 function addCards() {
   let arr;
+
   if ((levelNum === 0) || (levelNum === 4)) {
     arr = cardsFileName;
   } else if (levelNum === 1) {
@@ -217,8 +218,8 @@ function addCards() {
     array.sort(() => Math.random() - 0.5);
   }
 
-  if (levelNum === 0) {
-    function pushArrCard(stage, k) {
+  function pushArrCard(stage, k) {
+    if (levelNum === 0) {
       for (let i = 0; i < cardCount[mapNum][stage][k]; i++) {
         let items = arr[k][2];
         let item = items[Math.floor(Math.random() * items.length)];
@@ -231,19 +232,7 @@ function addCards() {
           items.splice(items.indexOf(item), 1);
         }
       }
-    }
-
-    for (let i = 0; i <= 2; i++) {
-      for (let j = 0; j <= 2; j++) {
-        pushArrCard(i, j);
-      }
-      shuffle(cardGame[i]);
-    }
-  }
-
-
-  if ((levelNum === 1) || (levelNum === 2) || (levelNum === 3)) {
-    function pushArrCard(stage, k) {
+    } else if ((levelNum === 1) || (levelNum === 2) || (levelNum === 3)) {
       for (let i = 0; i < cardCount[mapNum][stage][k]; i++) {
         let items = arr[k];
         let item = items[Math.floor(Math.random() * items.length)];
@@ -252,19 +241,7 @@ function addCards() {
           items.splice(items.indexOf(item), 1);
         }
       }
-    }
-
-    for (let i = 0; i <= 2; i++) {
-      for (let j = 0; j <= 2; j++) {
-        pushArrCard(i, j);
-      }
-      shuffle(cardGame[i]);
-    }
-  }
-
-  if (levelNum === 4) {
-
-    function pushArrCard(stage, k) {
+    } else if (levelNum === 4) {
       for (let i = 0; i < cardCount[mapNum][stage][k]; i++) {
         let items = arr[k][0];
         let item = items[Math.floor(Math.random() * items.length)];
@@ -278,13 +255,13 @@ function addCards() {
         }
       }
     }
+  }
 
-    for (let i = 0; i <= 2; i++) {
-      for (let j = 0; j <= 2; j++) {
-        pushArrCard(i, j);
-      }
-      shuffle(cardGame[i]);
+  for (let i = 0; i <= 2; i++) {
+    for (let j = 0; j <= 2; j++) {
+      pushArrCard(i, j);
     }
+    shuffle(cardGame[i]);
   }
 }
 
@@ -305,7 +282,6 @@ function addCardCount(stageNum, num) {
 }
 
 function showCard(i) {
-
   let dir;
   let stageStatus = 0;
   let fileName = cardGame[i][0];
